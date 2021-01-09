@@ -14,6 +14,9 @@ class Profile(models.Model):
     debt = models.BigIntegerField(default=0)
     owed = models.BigIntegerField(default=0)
 
+    def __str__(self):
+        return self.user.username
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
