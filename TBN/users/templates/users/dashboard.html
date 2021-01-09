@@ -20,11 +20,11 @@ Hello, {{ user.username|default:'Guest' }}!
         Debt: {{user.profile.debt}}
         <br><br>
         Network:
+        <ul>
         {% for i in network %}
-        {{i}}
-        <br><br>
+        <li>{{i}}</li>
         {% endfor %}
-
+        </ul>
         <br><br>
         <a href="{% url 'logout' %}">Logout</a>
         <br><br>
