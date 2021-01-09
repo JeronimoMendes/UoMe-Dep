@@ -1,0 +1,30 @@
+<!--users/templates/users/dashboard.html-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+Hello, {{ user.username|default:'Guest' }}!
+
+<div>
+    {% if user.is_authenticated %}
+        Your information:
+        <br><br>
+        E-mail: {{user.email}}
+        First name: {{user.first_name|default:"Not defined"}}
+        Last name: {{user.last_name|default:"Not defined"}}
+        Owed: {{user.profile.owed}}
+        Debt: {{user.profile.debt}}
+        Network: {% for cont in users: %}
+                 <td>{{cont}}</td>
+                 {% if not forloop.last %},{% endfor %}{% endfor %}
+        <br><br>
+        <a href="{% url 'logout' %}">Logout</a>
+        <br><br>
+        <a href="{% url 'password_change' %}">Change password</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+{% endblock %}
+
