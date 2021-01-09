@@ -17,13 +17,7 @@ def dashboard(request):
     return render(request, "users/dashboard.html", args)
 
 def register(request):
-    """
-    if request.method == "GET":
-        return render(
-            request, "users/register.html",
-            {"form": CustomUserCreationForm}
-        )
-    """
+
     args = {}
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -45,7 +39,7 @@ def edit_info(request):
     if request.method == "GET":
         return render(
             request, "users/edit_info.html",
-            {"form": AddToNetwork}
+            {"form": AddToNetwork()}
         )
 
     if request.method == "POST":
@@ -54,7 +48,17 @@ def edit_info(request):
         if form.is_valid():
             form.save()
 
-            return redirect(reverse("dashboard"))
+    return redirect("/edit_info/")
 
     
+def user_search_view(request, *args, **kwargs):
+    context = {}
 
+    if request.method == "GET":
+        search_query = request.GET.get("q")
+        if len(search_query) > 0:
+            search_result = User.objects.filter(username__icontains=search_query)
+            print([i.username for i in search_result])
+            context["search_result"] = search_result
+
+    return render(request, "users/search_results.html", context)
