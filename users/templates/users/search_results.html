@@ -3,7 +3,9 @@
 {% block content %}
 
 {% for u, in_network in search_result %}
-<h3>{{u.username}} {% if in_network %} in network {% endif %}</h3>
+    {% if u != user %}
+        <h3>{{u.username}} {% if in_network %} in network {% endif %}</h3>
+    {% endif %}
 {% endfor %}
 
 {% endblock %}
