@@ -58,7 +58,6 @@ def user_search_view(request, *args, **kwargs):
         search_query = request.GET.get("q")
         if len(search_query) > 0:
             search_result = User.objects.filter(username__icontains=search_query)
-            print([i.username for i in search_result])
-            context["search_result"] = search_result
-
+            context["search_result"] = [(u, request.user.profile.network.filter(user=u).exists()) for u in search_result]
+            print(context)
     return render(request, "users/search_results.html", context)
