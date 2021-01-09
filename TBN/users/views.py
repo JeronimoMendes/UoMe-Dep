@@ -11,7 +11,7 @@ def dashboard(request):
     user = request.user
     profile = user.profile
     network = profile.network.all()
-    network = [i.username for i in network]
+    network = [i.user.username for i in network]
     args = {}
     args["network"] = network
     return render(request, "users/dashboard.html", args)
