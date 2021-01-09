@@ -11,13 +11,20 @@ Hello, {{ user.username|default:'Guest' }}!
         Your information:
         <br><br>
         E-mail: {{user.email}}
+        <br><br>
         First name: {{user.first_name|default:"Not defined"}}
+        <br><br>
         Last name: {{user.last_name|default:"Not defined"}}
+        <br><br>
         Owed: {{user.profile.owed}}
         Debt: {{user.profile.debt}}
-        Network: {% for cont in users: %}
-                 <td>{{cont}}</td>
-                 {% if not forloop.last %},{% endfor %}{% endfor %}
+        <br><br>
+        Network:
+        {% for i in network %}
+        {{i}}
+        <br><br>
+        {% endfor %}
+
         <br><br>
         <a href="{% url 'logout' %}">Logout</a>
         <br><br>

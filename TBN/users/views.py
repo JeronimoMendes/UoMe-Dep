@@ -4,12 +4,17 @@ from django.urls import reverse
 from users.forms import CustomUserCreationForm, AddToNetwork
 from django.forms import ValidationError
 from django.contrib.auth.models import User
+
 # Create your views here.
 
 def dashboard(request):
-    u_network = User.objects.get(id=1)
-    users = [i for i in u_network.things.all()]
-    return render(request, "users/dashboard.html")
+    user = request.user
+    profile = user.profile
+    network = profile.network.all()
+    network = [i.username for i in network]
+    args = {}
+    args["network"] = network
+    return render(request, "users/dashboard.html", args)
 
 def register(request):
     """
