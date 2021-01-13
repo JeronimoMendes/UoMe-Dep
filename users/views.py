@@ -52,8 +52,10 @@ def edit_info(request):
 
     
 def user_search_view(request, *args, **kwargs):
+    if not request.user.is_authenticated: return redirect("/accounts/login")
+    
     context = {}
-
+    
     if request.method == "GET":
         search_query = request.GET.get("q")
         if len(search_query) > 0:
