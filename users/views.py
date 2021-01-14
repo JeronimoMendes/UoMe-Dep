@@ -53,13 +53,16 @@ def edit_info(request):
     
 def user_search_view(request, *args, **kwargs):
     if not request.user.is_authenticated: return redirect("/accounts/login")
-    
     context = {}
-    
-    if request.method == "GET":
+
+    if(request.GET.get('mybtn')):
+        user2 = request.GET.get('user2')
+        request.user.profile.request_network(user2)
+
+    elif request.method == "GET":
         search_query = request.GET.get("q")
         if len(search_query) > 0:
             search_result = User.objects.filter(username__icontains=search_query)
             context["search_result"] = [(u, request.user.profile.network.filter(user=u).exists()) for u in search_result]
-            print(context)
+
     return render(request, "users/search_results.html", context)
