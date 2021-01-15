@@ -4,7 +4,7 @@
 
 {% for u, in_network in search_result %}
     {% if u != user %}
-        <h3>{{u.username}} {% if in_network %} in network 
+        <h3>{{u.username}} {% if in_network %} 
             {% else %}<form> 
                 <input type="submit" class="btn" value="Add to network" name="mybtn"></input> 
                 <input type="hidden" value={{u.username}} name="user2"/>

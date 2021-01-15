@@ -66,19 +66,18 @@ def user_search_view(request, *args, **kwargs):
             search_result = User.objects.filter(username__icontains=search_query)
             context["search_result"] = [(u, request.user.profile.network.filter(user=u).exists()) for u in search_result]
 
-    return render(request, "users/search_results.html", context)
+    return redirect("/friendrequest/")
 
 
 def friend_request(request):
+    def get_context():
+        return {"friend_requests": FriendRequest.objects.filter(to_user=request.user)}
+
     if(request.GET.get('mybtn')):
         user2 = request.GET.get('user2')
         request.user.profile.add_to_network(user2)
+        return render(request, "users/friend_requests.html", get_context())
 
 
     if request.method == "GET":
-        context = {}
-        friend_requests = FriendRequest.objects.filter(to_user=request.user)
-        #friend_requests = [i.user for i in friend_requests]
-        context = {"friend_requests": friend_requests}
-        print(context)
-        return render(request, "users/friend_requests.html", context)
+        return render(request, "users/friend_requests.html", get_context())
