@@ -6,8 +6,8 @@ from django.dispatch import receiver
 # Create your models here.
 class Profile(models.Model):
     
-    network = models.ManyToManyField("self")
-    network_requests = models.ManyToManyField("self")
+    network = models.ManyToManyField("self", blank=True)
+    network_requests = models.ManyToManyField("self", blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
@@ -20,8 +20,8 @@ class Profile(models.Model):
 
     def add_to_network(self, user2):
         user2 = User.objects.get(username=user2)
-        self.network.add(user2)
-        self.network_requests.remove(user2)
+        self.network.add(user2.profile)
+        self.network_requests.remove(user2.profile)
 
     def request_network(self, user2):
         """

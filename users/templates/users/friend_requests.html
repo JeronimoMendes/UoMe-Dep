@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if friend_requests %}
+    {% for request in friend_requests %}
+        <h2>{{request.username}}</h2>
+        <form>
+        <input type="submit" class="btn" value="Accept" name="mybtn"> 
+        <input type="hidden" value={{request.username}} name="user2">
+        </form>
+    {% endfor %}
+{% else %} 
+<h1>You got no friend requests</h1>
+{% endif %}
+
+{% endblock %}
