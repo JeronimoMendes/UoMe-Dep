@@ -4,6 +4,7 @@ from django.urls import reverse
 from users.forms import CustomUserCreationForm, AddToNetwork
 from django.forms import ValidationError
 from django.contrib.auth.models import User
+from .models import FriendRequest
 
 # Create your views here.
 
@@ -76,9 +77,8 @@ def friend_request(request):
 
     if request.method == "GET":
         context = {}
-        friend_requests = request.user.profile.network_requests.all()
-        friend_requests = [i.user for i in friend_requests]
-
+        friend_requests = FriendRequest.objects.filter(to_user=request.user)
+        #friend_requests = [i.user for i in friend_requests]
         context = {"friend_requests": friend_requests}
         print(context)
         return render(request, "users/friend_requests.html", context)

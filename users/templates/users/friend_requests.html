@@ -4,10 +4,10 @@
 
 {% if friend_requests %}
     {% for request in friend_requests %}
-        <h2>{{request.username}}</h2>
+        <h2>{{request.from_user}}</h2>
         <form>
         <input type="submit" class="btn" value="Accept" name="mybtn"> 
-        <input type="hidden" value={{request.username}} name="user2">
+        <input type="hidden" value={{request.from_user}} name="user2">
         </form>
     {% endfor %}
 {% else %} 

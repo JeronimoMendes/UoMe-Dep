@@ -7,7 +7,6 @@ from django.dispatch import receiver
 class Profile(models.Model):
     
     network = models.ManyToManyField("self", blank=True)
-    network_requests = models.ManyToManyField("self", blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
@@ -20,16 +19,23 @@ class Profile(models.Model):
 
     def add_to_network(self, user2):
         user2 = User.objects.get(username=user2)
+        FriendRequest.objects.get(to_user=self.user, from_user=user2).delete()
         self.network.add(user2.profile)
-        self.network_requests.remove(user2.profile)
 
     def request_network(self, user2):
         """
         user2: user username
         """
         user2 = User.objects.get(username=user2)
-        self.network_requests.add(user2.profile)
+        friend_request = FriendRequest(self.user, user2)
 
+
+class FriendRequest(models.Model):
+
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="from_user")
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="to_user")
+
+    def __str__(self): return (self.from_user.username+ "_" + self.to_user.username)
 
 
 @receiver(post_save, sender=User)
