@@ -56,15 +56,25 @@ def user_search_view(request, *args, **kwargs):
     if not request.user.is_authenticated: return redirect("/accounts/login")
     context = {}
 
+    if(request.GET.get("search-user")):
+        redirect("/search?q={}".format(request.GET.get("q").get))
+
     if(request.GET.get('mybtn')):
         user2 = request.GET.get('user2')
         request.user.profile.request_network(user2)
+        return redirect("/search/")
 
     elif request.method == "GET":
         search_query = request.GET.get("q")
+        print(type(search_query))
+
+        if search_query == None:
+            return render(request, "users/search_results.html", {"search_result":None})
+
         if len(search_query) > 0:
             search_result = User.objects.filter(username__icontains=search_query)
             context["search_result"] = [(u, request.user.profile.network.filter(user=u).exists()) for u in search_result]
+            context["friend_request_sent"] = [i.to_user for i in FriendRequest.objects.filter(from_user=request.user)]
 
     return render(request, "users/search_results.html", context)
 
@@ -81,3 +91,17 @@ def friend_request(request):
 
     if request.method == "GET":
         return render(request, "users/friend_requests.html", get_context())
+
+
+def friends(request):
+    def get_context():
+        return {"friends": request.user.profile.network.all()}
+
+    if(request.GET.get('mybtn')):
+        user2 = request.GET.get('user2')
+        request.user.profile.remove_from_network(user2)
+        return redirect("/friends/")
+
+
+    if request.method == "GET":
+        return render(request, "users/friends.html", get_context())

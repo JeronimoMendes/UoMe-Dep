@@ -32,7 +32,8 @@ ALLOWED_HOSTS = ["localhost", "192.168.1.136"]
 
 # Application definition
 
-INSTALLED_APPS = [    
+INSTALLED_APPS = [  
+    'common_balance',  
     'users',
     'social_django',
     'django.contrib.admin',

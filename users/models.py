@@ -27,7 +27,12 @@ class Profile(models.Model):
         user2: user username
         """
         user2 = User.objects.get(username=user2)
-        friend_request = FriendRequest(self.user, user2)
+        FriendRequest.objects.create(from_user=self.user, to_user=user2)
+
+    def remove_from_network(self, user2):
+
+        print(user2)
+        self.network.remove(User.objects.get(username=user2).profile)
 
 
 class FriendRequest(models.Model):

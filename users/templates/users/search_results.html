@@ -2,14 +2,27 @@
 
 {% block content %}
 
-{% for u, in_network in search_result %}
-    {% if u != user %}
-        <h3>{{u.username}} {% if in_network %} 
-            {% else %}<form> 
-                <input type="submit" class="btn" value="Add to network" name="mybtn"></input> 
-                <input type="hidden" value={{u.username}} name="user2"/>
-            </form>{% endif%}</h3>
-    {% endif %}
-{% endfor %}
+<form>
+    <input type="search" name="q">
+</form>
+
+{% if search_result %}
+    {% for u, in_network in search_result %}
+        {% if u != user %}
+            <h2>{{u.username}}
+                {% if in_network %} 
+                    <label>Friend</label>
+                {% elif u in friend_request_sent%}
+                    <label>Friend request already sent</label>
+                {% else %}<form> 
+                    <input type="submit" class="btn" value="Add to network" name="mybtn"></input> 
+                    <input type="hidden" value={{u.username}} name="user2"/>
+                </form>{% endif%}</h3>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<br>
+<a href="/dashboard/">Dashboard</a>
 
 {% endblock %}
