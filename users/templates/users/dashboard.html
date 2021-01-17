@@ -16,8 +16,9 @@ Hello, {{ user.username|default:'Guest' }}!
         <br><br>
         Last name: {{user.last_name|default:"Not defined"}}
         <br><br>
-        Owed: {{user.profile.owed}}
-        Debt: {{user.profile.debt}}
+        
+        Owed: {{owed}}
+        Debt: {{debt}}
 
         <br><br>
         <a href="{% url 'logout' %}">Logout</a>

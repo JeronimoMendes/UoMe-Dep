@@ -13,9 +13,13 @@ def dashboard(request):
     profile = user.profile
     network = profile.network.all()
     network = [i.user.username for i in network]
-    args = {}
-    args["network"] = network
-    return render(request, "users/dashboard.html", args)
+    context = {
+        "network": network,
+        "debt": user.profile.debt/100,
+        "owed": user.profile.owed/100
+    }
+    
+    return render(request, "users/dashboard.html", context)
 
 def register(request):
 

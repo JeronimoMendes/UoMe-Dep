@@ -4,16 +4,16 @@ from django.contrib.auth.models import User
 # Create your models here.
 class CommonAccount(models.Model):
 
-    user1 = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user1")
-    user2 = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user2")
+    user1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user1")
+    user2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user2")
     balance = models.BigIntegerField(default=0)
 
     def __str__(self): return "CB{}_{}".format(self.user1, self.user2)
 
 
     def increase_debt(self, user, value):
-        user.profile.owed += value
-        self.other_user(user).profile.debt += value
+        user.profile.change_owed(value)
+        self.other_user(user).profile.change_debt(value)
 
         if user == self.user1:
            self.balance += value
@@ -24,8 +24,8 @@ class CommonAccount(models.Model):
 
 
     def decrease_debt(self, user, value):
-        user.profile.owed -= value
-        self.other_user(user).profile.debt -= value
+        user.profile.change_owed(value)
+        self.other_user(user).profile.change_debt(value)
 
         if user == self.user1:
            self.balance -= value

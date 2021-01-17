@@ -34,6 +34,17 @@ class Profile(models.Model):
         print(user2)
         self.network.remove(User.objects.get(username=user2).profile)
 
+    def change_debt(self, value):
+        self.debt += value
+
+        self.save()
+
+    
+    def change_owed(self, value):
+        self.owed += value
+
+        self.save()
+
 
 class FriendRequest(models.Model):
 
