@@ -12,6 +12,9 @@ class CommonBalance(models.Model):
 
 
     def increase_debt(self, user, value):
+        user.profile.owed += value
+        self.other_user(user).profile.debt += value
+
         if user == self.user1:
            self.balance += value
 
@@ -19,6 +22,9 @@ class CommonBalance(models.Model):
 
 
     def descrease_debt(self, user, value):
+        user.profile.owed -= value
+        self.other_user(user).profile.debt -= value
+
         if user == self.user1:
            self.balance -= value
 
