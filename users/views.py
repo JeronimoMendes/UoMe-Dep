@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from users.forms import CustomUserCreationForm, AddToNetwork
@@ -8,17 +8,20 @@ from .models import FriendRequest
 
 # Create your views here.
 
+
 def dashboard(request):
-    user = request.user
-    profile = user.profile
-    network = profile.network.all()
-    network = [i.user.username for i in network]
-    context = {
-        "network": network,
-        "debt": user.profile.debt/100,
-        "owed": user.profile.owed/100
-    }
-    
+    context = {}
+    if request.user.is_authenticated:
+        user = request.user
+        profile = user.profile
+        network = profile.network.all()
+        network = [i.user.username for i in network]
+        context = {
+            "network": network,
+            "debt": user.profile.debt/100,
+            "owed": user.profile.owed/100
+        }
+        
     return render(request, "users/dashboard.html", context)
 
 def register(request):
