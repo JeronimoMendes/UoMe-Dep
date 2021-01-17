@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1>Debt Dashboard</h1>
-
+<a href="/dashboard/">Back to main dashboard</a>
 {% if common_accs %}
     {% for acc, other_user, debt in common_accs %}
         <h2>Common account with {{other_user.username}}</h2>

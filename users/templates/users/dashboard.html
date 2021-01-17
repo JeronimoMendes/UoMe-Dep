@@ -19,7 +19,14 @@ Hello, {{ user.username|default:'Guest' }}!
         
         Owed: {{owed}}
         Debt: {{debt}}
-
+        <br><br> 
+        <a href="/debt_dashboard/">Manage your debt</a>
+        <br><br>        
+        <a href="/friends/">Friends</a>
+        <br><br>
+        <a href="/friend_request/">Friend Requests</a>
+        <br><br>
+        <a href="/search/">Search user</a>
         <br><br>
         <a href="{% url 'logout' %}">Logout</a>
         <br><br>
@@ -27,11 +34,6 @@ Hello, {{ user.username|default:'Guest' }}!
         <br><br>
         <a href="/edit_info/">Edit profile</a>
         <br><br>
-        <a href="/friends/">Friends</a>
-        <br><br>
-        <a href="/friend_request/">Friend Requests</a>
-        <br><br>
-        <a href="/search/">Search user</a>
     {% else %}
         <a href="{% url 'login' %}">Login</a>
     {% endif %}
