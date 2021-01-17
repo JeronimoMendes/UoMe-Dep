@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Account with {{other_user}}</h2>
+<h3>You owe {{other_user}} {{debt}}€</h3>
+<h3>{{other_user}} owes you {{owed}}€</h3>
+
+<form>
+    <input type="number" step="0.01"name="value_inc_debt">
+    <input type="submit" class="btn" value="Increase money owed" name="inc_debt">
+    <input type="number" step="0.01" name="value_inc_owed">
+    <input type="submit" class="btn" value="Increase your debt" name="inc_owed">
+    <input type="hidden" value="{{acc.id}}" name="account">
+</form>
+
+{% endblock %}

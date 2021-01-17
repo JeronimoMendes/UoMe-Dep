@@ -66,7 +66,6 @@ def user_search_view(request, *args, **kwargs):
 
     elif request.method == "GET":
         search_query = request.GET.get("q")
-        print(type(search_query))
 
         if search_query == None:
             return render(request, "users/search_results.html", {"search_result":None})

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CommonBalance
+from .models import CommonAccount
 
 # Register your models here.
-admin.site.register(CommonBalance)
+admin.site.register(CommonAccount)

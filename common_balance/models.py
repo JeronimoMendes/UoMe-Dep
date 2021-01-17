@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class CommonBalance(models.Model):
+class CommonAccount(models.Model):
 
     user1 = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user1")
     user2 = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user2")
@@ -20,8 +20,10 @@ class CommonBalance(models.Model):
 
         else: self.balance -= value
 
+        self.save()
 
-    def descrease_debt(self, user, value):
+
+    def decrease_debt(self, user, value):
         user.profile.owed -= value
         self.other_user(user).profile.debt -= value
 
@@ -29,6 +31,8 @@ class CommonBalance(models.Model):
            self.balance -= value
 
         else: self.balance += value
+
+        self.save()
 
 
     def how_much_debt(self, user):
@@ -39,6 +43,10 @@ class CommonBalance(models.Model):
         else: 
             if self.balance < 0: return 0
             return self.balance
+
+    
+    def how_much_owes(self, user):
+        return self.how_much_debt(self.other_user(user))
 
     
     def other_user(self, user):
