@@ -50,6 +50,6 @@ class CommonAccount(models.Model):
 
     
     def other_user(self, user):
-        if user == self.user1: return self.user2
+        if user == self.user1.username: return self.user2
         else: return self.user1
 
