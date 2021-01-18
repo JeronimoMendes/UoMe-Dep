@@ -5,7 +5,7 @@
 {% block content %}
 
 <div>
-Hello, {{ user.username|default:'Guest' }}!
+<h2>Hello, {{ user.username|default:'Guest' }}!</h2>
     {% if user.is_authenticated %}
         <br><br> 
         <a href="/debt_dashboard/">Manage your debt</a>
