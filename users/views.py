@@ -18,8 +18,8 @@ def dashboard(request):
         network = [i.user.username for i in network]
         context = {
             "network": network,
-            "debt": user.profile.debt/100,
-            "owed": user.profile.owed/100
+            "debt": user.profile.debt / 100,
+            "owed": user.profile.owed / 100
         }
         
     return render(request, "users/dashboard.html", context)
