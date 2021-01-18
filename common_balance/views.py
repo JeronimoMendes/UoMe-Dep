@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
 # Create your views here.
-def debt_dashboard(request):
+def debt_dashboard(request):   
     def get_context():
         user = request.user
         common_accs = [(i, i.other_user(user.username), i.how_much_debt(user)/100) for i in CommonAccount.objects.filter(user1=user)]
@@ -13,7 +13,7 @@ def debt_dashboard(request):
         friends = [i.user.username for i in user.profile.network.all() if i.user not in [i for a,i,b in common_accs]]
 
         context = {
-            "common_accs":common_accs,
+            "common_accs": common_accs,
             "friends": friends
         }
         return context

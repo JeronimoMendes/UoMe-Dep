@@ -22,10 +22,36 @@
 <!-- Image and text -->
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/dashboard">
-        UoMe
-      </a>
+      <a class="navbar-brand" href="/dashboard">UoMe</a>
     </div>
   </nav>
+<div class="main">
 {% block content %}
 {% endblock %}
+</div>
+
+<style>
+.main{
+  padding: 0 1%;
+}
+
+.navbar {
+  min-height: 80px;
+  background-color: gray;
+}
+
+.navbar-brand{
+  font-size: 30px;
+  padding: 0 15px;
+  height: 80px;
+  line-height: 80px;
+  color: white;
+  text-decoration: none
+}
+
+.navbar-brand:on-hover{
+  color: rgb(123, 255, 248);
+  text-decoration: none
+}
+
+</style>

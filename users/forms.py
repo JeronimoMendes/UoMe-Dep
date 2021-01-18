@@ -8,16 +8,4 @@ class CustomUserCreationForm(UserCreationForm):
         'password_mismatch': "Passwords don't match.",
     }
     class Meta(UserCreationForm.Meta):
-        fields = UserCreationForm.Meta.fields + ("email", "first_name")
-
-class AddToNetwork(ModelForm):
-
-    bio = CharField(required=False, max_length=500, initial="bio")
-    location = CharField(required=False, max_length=30, initial=" ")
-    birth_date = DateField(required=False, initial=" ")
-
-    class Meta:
-        model = Profile
-        fields = ["bio", "location", "birth_date"]
-
-
+        fields = UserCreationForm.Meta.fields + ("email",)

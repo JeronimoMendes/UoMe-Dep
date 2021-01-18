@@ -1,38 +1,89 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="main">
+    <h1>Debt Dashboard</h1>
+    <a href="/dashboard/">Back to main dashboard</a>
 
-<h1>Debt Dashboard</h1>
-<a href="/dashboard/">Back to main dashboard</a>
+    <hr>
+    {% if friends %}
+        <h3>Add new common account</h3>
 
-<hr>
-{% if friends %}
-    <h3>Add new common account</h3>
-
-    <form>
-        <label for="cars">Choose a friend:</label>
-        <select id="friend" name="friend">
-        {% for friend in friends %}
-            <option value="{{friend}}">{{friend}}</option>
-        {% endfor %}
-        </select>
-        <input type="submit" class="btn" value="Create" name="btt">
-    </form>
-{% endif %}
+        <form>
+            <label for="cars">Choose a friend:</label>
+            <select id="friend" name="friend">
+            {% for friend in friends %}
+                <option value="{{friend}}">{{friend}}</option>
+            {% endfor %}
+            </select>
+            <input type="submit" class="btn" value="Create" name="btt">
+        </form>
+    {% endif %}
 
 
-<hr>
+    <hr>
 
-{% if common_accs %}
-    {% for acc, other_user, debt in common_accs %}
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-            <h5 class="card-title">{{other_user.username}}</h5>
-            <a href="/common_account/?q={{acc.id}}" class="btn btn-primary">Go into account</a>
-            </div>
+    {% if common_accs %}
+        <div class="row">
+           
+                {% for acc, other_user, debt in common_accs %}
+                <div class="column">
+                    <div class="card">
+                        <h4>{{other_user.username}}</h4>
+                        <a href="/common_account/?q={{acc.id}}" class="btn btn-primary">Go into account</a>
+                    </div>
+                </div>                    
+                {% endfor %}
+            
         </div>
-    {% endfor %}
-{% endif %}
+    {% endif %}
+</div>
 
+
+
+<style>
+/* Float four columns side by side */
+* {
+    box-sizing: border-box;
+  }
+  
+.column {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+    padding-bottom: 16px;
+   
+  }
+  
+/* Remove extra left and right margins, due to padding in columns */
+.row {
+    margin: 0 -5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Style the counter cards */
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+    padding: 16px;
+    text-align: center;
+    background-color: #f1f1f1;
+}
+
+/* Responsive columns - one column layout (vertical) on small screens */
+@media screen and (max-width: 600px) {
+    .column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+        }
+}
+
+</style>
 
 {% endblock %}

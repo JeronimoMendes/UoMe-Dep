@@ -1,7 +1,7 @@
 from django.contrib.auth import login, logout
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from users.forms import CustomUserCreationForm, AddToNetwork
+from users.forms import CustomUserCreationForm
 from django.forms import ValidationError
 from django.contrib.auth.models import User
 from .models import FriendRequest
@@ -42,21 +42,6 @@ def register(request):
     args["form"] = form
 
     return render(request, "users/register.html", args)
-    
-def edit_info(request):
-    if request.method == "GET":
-        return render(
-            request, "users/edit_info.html",
-            {"form": AddToNetwork()}
-        )
-
-    if request.method == "POST":
-        form = AddToNetwork(request.POST, instance=request.user.profile)
-
-        if form.is_valid():
-            form.save()
-
-    return redirect("/edit_info/")
 
     
 def user_search_view(request, *args, **kwargs):
@@ -85,29 +70,24 @@ def user_search_view(request, *args, **kwargs):
     return render(request, "users/search_results.html", context)
 
 
-def friend_request(request):
-    def get_context():
-        return {"friend_requests": FriendRequest.objects.filter(to_user=request.user)}
-
-    if(request.GET.get('mybtn')):
-        user2 = request.GET.get('user2')
-        request.user.profile.add_to_network(user2)
-        return redirect("/friend_request/")
-
-
-    if request.method == "GET":
-        return render(request, "users/friend_requests.html", get_context())
-
-
 def friends(request):
     def get_context():
-        return {"friends": request.user.profile.network.all()}
+        context = {
+            "friends": request.user.profile.network.all(),
+            "friend_requests": FriendRequest.objects.filter(to_user=request.user)
+        }
+        return context
 
     if(request.GET.get('mybtn')):
         user2 = request.GET.get('user2')
         request.user.profile.remove_from_network(user2)
         return redirect("/friends/")
 
+    if(request.GET.get('mybtn_fr')):
+        user2 = request.GET.get('friend_request')
+        request.user.profile.add_to_network(user2)
+        return redirect("/friends/")
 
     if request.method == "GET":
-        return render(request, "users/friends.html", get_context())
+        return render(request, "users/friends.html", get_context()) 
+        
