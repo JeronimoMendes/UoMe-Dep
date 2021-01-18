@@ -36,7 +36,7 @@ class CommonAccount(models.Model):
 
 
     def how_much_debt(self, user):
-        if user == self.user1:
+        if user == self.user1 or user == self.user1.username:
             if self.balance > 0: return 0
             return abs(self.balance)
 
