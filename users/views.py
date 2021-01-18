@@ -16,10 +16,12 @@ def dashboard(request):
         profile = user.profile
         network = profile.network.all()
         network = [i.user.username for i in network]
+        nr_friend_requests = len(FriendRequest.objects.filter(to_user=user))
         context = {
             "network": network,
             "debt": user.profile.debt / 100,
-            "owed": user.profile.owed / 100
+            "owed": user.profile.owed / 100,
+            "nr_friend_requests": nr_friend_requests
         }
         
     return render(request, "users/dashboard.html", context)
@@ -90,4 +92,3 @@ def friends(request):
 
     if request.method == "GET":
         return render(request, "users/friends.html", get_context()) 
-        

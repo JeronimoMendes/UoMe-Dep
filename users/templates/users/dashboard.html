@@ -7,21 +7,13 @@
 <div>
 Hello, {{ user.username|default:'Guest' }}!
     {% if user.is_authenticated %}
-        Your information:
-        <br><br>
-        E-mail: {{user.email}}
-        <br><br>
-        First name: {{user.first_name|default:"Not defined"}}
-        <br><br>
-        Last name: {{user.last_name|default:"Not defined"}}
-        <br><br>
-        
-        Owed: {{owed}}
-        Debt: {{debt}}
         <br><br> 
         <a href="/debt_dashboard/">Manage your debt</a>
-        <br><br>        
-        <a href="/friends/">Friends</a>
+        <br><br> <a href="/friends/">
+        <button type="button" class="btn btn-outline-primary">
+            Friends {% if nr_friend_requests %}<span class="badge bg-secondary">{{nr_friend_requests}}</span>{% endif %}
+        </button>       
+        </a>
         <br><br>
         <a href="/search/">Search user</a>
         <br><br>
@@ -34,5 +26,14 @@ Hello, {{ user.username|default:'Guest' }}!
         <a href="{% url 'register' %}">Register</a>
     {% endif %}
 </div>
+
+<style>
+.badge {
+    background-color: red;
+}
+
+
+</style>
+
 {% endblock %}
 
