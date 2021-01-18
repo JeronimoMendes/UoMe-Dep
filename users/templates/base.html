@@ -1,4 +1,5 @@
 <!--users/templates/base.html-->
+<!DOCTYPE html>
 <style>
     label, input {
         display: block;
@@ -8,7 +9,23 @@
     }
 </style>
 
-<h1>Welcome to UoMe</h1>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+<!-- Image and text -->
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/dashboard">
+        UoMe
+      </a>
+    </div>
+  </nav>
 {% block content %}
 {% endblock %}

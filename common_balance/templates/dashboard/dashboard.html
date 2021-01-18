@@ -25,8 +25,12 @@
 
 {% if common_accs %}
     {% for acc, other_user, debt in common_accs %}
-        <h2>Common account with {{other_user.username}}</h2>
-        <a href="/common_account/?q={{acc.id}}">Go into account</a>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+            <h5 class="card-title">{{other_user.username}}</h5>
+            <a href="/common_account/?q={{acc.id}}" class="btn btn-primary">Go into account</a>
+            </div>
+        </div>
     {% endfor %}
 {% endif %}
 
