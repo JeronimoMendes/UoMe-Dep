@@ -4,9 +4,9 @@
 
 {% if friend_requests %}
     <h2>Friend requests</h2>
-    <div class="row">
-        <div class="column">
-            {% for request in friend_requests %}
+    <div class="row">       
+        {% for request in friend_requests %}
+            <div class="column">
                 <div class="card">
                     <h4>{{request.from_user}}</h4>
                     <form>
@@ -14,8 +14,8 @@
                         <input type="hidden" value={{request.from_user}} name="friend_request">
                     </form>
                 </div>
-            {% endfor %}
-        </div>
+            </div>    
+        {% endfor %}        
     </div>
     <hr>
 {% endif %}
@@ -23,8 +23,8 @@
 <h2>Friends</h2>
 {% if friends %} 
     <div class="row">
-        <div class="column">
-            {% for friend in friends %}
+        {% for friend in friends %}
+            <div class="column">
                 <div class="card">
                     <h4>{{friend.user.username}}</h4>
                     <form>
@@ -32,8 +32,8 @@
                         <input type="hidden" value={{friend.user.username}} name="user2">
                     </form>
                 </div>
-            {% endfor %}
-        </div>
+            </div>
+        {% endfor %}
     </div>
 {% else %}<h4>You got no friends :( ...</h4>
 {% endif %}
@@ -50,8 +50,7 @@
     float: left;
     width: 10%;
     padding: 0 10px;
-    padding-bottom: 16px;
-   
+    padding-bottom: 16px;   
   }
   
 /* Remove extra left and right margins, due to padding in columns */
