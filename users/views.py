@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from .models import FriendRequest
 
 # Create your views here.
-
+def welcome(request):
+    return render(request, "users/welcome.html")
 
 def dashboard(request):
     context = {}
