@@ -42,7 +42,7 @@ def register(request):
             user.backend = "django.contrib.auth.backends.ModelBackend"
             user.save()
             login(request, user)
-            return redirect(reverse("dashboard"))
+            return redirect(reverse("/debt_dashboard/"))
         
     else:
         form = CustomUserCreationForm()
