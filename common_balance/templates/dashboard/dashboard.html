@@ -150,6 +150,13 @@ body {
 .sidebar .logout {
   margin-top: 75%;
 }
+
+.isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
 </style>
 </head>
 <body>
@@ -166,16 +173,15 @@ body {
     <span class="badge bg-secondary">{{nr_friend_requests}}</span>
     {% endif %}</a>
   <a href="/search/">Search</a>
-  <a href="#">Preferences</a>
-  <a href="#">Contact</a>
-  <a class="logout" href="/account/logout/">Logout</a>
+  <a class="isDisabled" href="#">Preferences</a>
+  <a class="isDisabled" href="#">Contact</a>
+  <a class="logout" href="/accounts/logout/">Logout</a>
   </div>
 </div>
 
 <div id="main">
    
   <h1>Debt Dashboard</h1>
-    <a href="/dashboard/">Back to main dashboard</a>
 
     <hr>
     {% if friends %}

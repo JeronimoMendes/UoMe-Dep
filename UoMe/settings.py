@@ -104,8 +104,8 @@ EMAIL_HOST_PASSWORD ="c7acaf84c0ede4de21cc35593e1667e6-b6190e87-3fe20f30"
 EMAIL_USE_TLS = True
 
 # Redirection URLs after user actions
-LOGIN_REDIRECT_URL = "dashboard"
-LOGOUT_REDIRECT_URL = "dashboard"
+LOGIN_REDIRECT_URL = "/debt_dashboard/"
+LOGOUT_REDIRECT_URL = "/welcome/"
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

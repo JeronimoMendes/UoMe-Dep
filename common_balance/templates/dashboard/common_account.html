@@ -100,7 +100,33 @@ body {
 .sidebar .current {
   color: #F8680C;
 }
+.column {
+  float: left;
+  width: 15%;
+  padding: 0 10px;
+  padding-bottom: 16px;
+ 
+}
 
+/* Remove extra left and right margins, due to padding in columns */
+.row {
+  margin: 0 -5px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+  padding: 16px;
+  text-align: center;
+  background-color: #f1f1f1;
+}
 
 /* Responsive columns - one column layout (vertical) on small screens */
 @media screen and (max-width: 600px) {
@@ -111,8 +137,25 @@ body {
       }
 }
 
+.btn-primary {
+  background-color: #F8680C;
+  border-color: #F8680C;
+  transition: 0.6s ease;
+}
+
+.btn-primary:hover {
+  background-color: #F8680C;
+  transform: scale(1.075);
+}
 .sidebar .logout {
   margin-top: 75%;
+}
+
+.isDisabled {
+  color: currentColor;
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
 }
 </style>
 </head>
@@ -130,25 +173,28 @@ body {
     <span class="badge bg-secondary">{{nr_friend_requests}}</span>
     {% endif %}</a>
   <a href="/search/">Search</a>
-  <a href="#">Preferences</a>
-  <a class="logout" href="#">Contact</a>
+  <a class="isDisabled" href="#">Preferences</a>
+  <a class="isDisabled" href="#">Contact</a>
+  <a class="logout" href="/accounts/logout/">Logout</a>
   </div>
 </div>
 
 <div id="main">
    
-    <h2>Account with {{other_user}}</h2>
-    <h3>You owe {{other_user}} {{debt}}€</h3>
-    <h3>{{other_user}} owes you {{owed}}€</h3>
     
-    <form>
-        <input type="number" step="0.01"name="value_inc_debt">
-        <input type="submit" class="btn" value="Increase money owed" name="inc_debt">
-        <input type="number" step="0.01" name="value_inc_owed">
-        <input type="submit" class="btn" value="Increase your debt" name="inc_owed">
-        <input type="hidden" value="{{acc.id}}" name="account">
-    </form>
-    
+  <h2>Account with {{other_user}}</h2>
+  <h3>You owe {{other_user}} {{debt}}€</h3>
+  <h3>{{other_user}} owes you {{owed}}€</h3>
+  
+  <form>
+      <input type="number" step="0.01"name="value_inc_debt">
+      <input type="submit" class="btn" value="Increase money owed" name="inc_debt">
+      <input type="number" step="0.01" name="value_inc_owed">
+      <input type="submit" class="btn" value="Increase your debt" name="inc_owed">
+      <input type="hidden" value="{{acc.id}}" name="account">
+  </form>
+  
+
 </div>
 
 <script>
