@@ -7,6 +7,10 @@ from django.contrib.auth.models import User
 from .models import FriendRequest
 
 # Create your views here.
+def dashboard2(request):
+    return render(request, "users/dashboard2.html")
+
+
 def welcome(request):
     return render(request, "users/welcome.html")
 
@@ -50,6 +54,8 @@ def register(request):
 def user_search_view(request, *args, **kwargs):
     if not request.user.is_authenticated: return redirect("/accounts/login")
     context = {}
+    nr_friend_requests = len(FriendRequest.objects.filter(to_user=request.user))
+    context["nr_friend_requests"] = nr_friend_requests
 
     if(request.GET.get("search-user")):
         redirect("/search?q={}".format(request.GET.get("q").get))
@@ -63,7 +69,7 @@ def user_search_view(request, *args, **kwargs):
         search_query = request.GET.get("q")
 
         if search_query == None:
-            return render(request, "users/search_results.html", {"search_result":None})
+            return render(request, "users/search_results.html", {"search_result":None, "nr_friend_requests": nr_friend_requests})
 
         if len(search_query) > 0:
             search_result = User.objects.filter(username__icontains=search_query)
@@ -77,7 +83,8 @@ def friends(request):
     def get_context():
         context = {
             "friends": request.user.profile.network.all(),
-            "friend_requests": FriendRequest.objects.filter(to_user=request.user)
+            "friend_requests": FriendRequest.objects.filter(to_user=request.user),
+            "nr_friend_requests": len(FriendRequest.objects.filter(to_user=request.user))
         }
         return context
 

@@ -3,18 +3,21 @@ from .models import CommonAccount
 from users.models import Profile
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
-
+from users.models import FriendRequest
 # Create your views here.
 def debt_dashboard(request):   
     def get_context():
         user = request.user
+        nr_friend_requests = len(FriendRequest.objects.filter(to_user=user))
+
         common_accs = [(i, i.other_user(user.username), i.how_much_debt(user)/100) for i in CommonAccount.objects.filter(user1=user)]
         common_accs += [(i, i.other_user(user.username), i.how_much_debt(user)/100) for i in CommonAccount.objects.filter(user2=user)]
         friends = [i.user.username for i in user.profile.network.all() if i.user not in [i for a,i,b in common_accs]]
 
         context = {
             "common_accs": common_accs,
-            "friends": friends
+            "friends": friends,
+            'nr_friend_requests': nr_friend_requests
         }
         return context
 
@@ -33,12 +36,14 @@ def common_acc(request):
         query = request.GET.get("q")
         account = CommonAccount.objects.get(id=query)
         user = request.user
+        nr_friend_requests = len(FriendRequest.objects.filter(to_user=user))
 
         context = {
             "other_user": account.other_user(user.username),
             "debt": account.how_much_debt(user.username)/100,
             "owed": account.how_much_owes(user.username)/100,
-            "acc": account
+            "acc": account,
+            'nr_friend_requests': nr_friend_requests
         }
 
         return context
