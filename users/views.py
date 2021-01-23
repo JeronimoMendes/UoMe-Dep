@@ -98,5 +98,11 @@ def friends(request):
         request.user.profile.add_to_network(user2)
         return redirect("/friends/")
 
+    if(request.GET.get("mybtn_fr_reject")):
+        user2 = User.objects.get(username=request.GET.get('friend_request'))
+        friend_request = FriendRequest.objects.get(from_user=user2, to_user=request.user)
+        friend_request.delete()
+        return redirect("/friends/")
+
     if request.method == "GET":
         return render(request, "users/friends.html", get_context()) 
