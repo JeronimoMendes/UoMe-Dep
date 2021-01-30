@@ -21,6 +21,9 @@ def debt_dashboard(request):
         }
         return context
 
+    if not request.user.is_authenticated: return redirect("/accounts/login")
+    
+
     if request.GET.get("friend"):
         friend = request.GET['friend'] 
 
@@ -48,28 +51,20 @@ def common_acc(request):
 
         return context
 
+    if not request.user.is_authenticated: return redirect("/accounts/login")
+
+
     if request.GET.get("q"):
         return render(request, "dashboard/common_account.html", get_context())
 
-    if request.GET.get("inc_debt"):
+    if request.GET.get("s"):
         inc_debt = float(request.GET.get('value_inc_debt'))
-        account_id = request.GET.get('account')
-        print(inc_debt)
+        inc_owed = float(request.GET.get('value_inc_owed'))
 
+        account_id = request.GET.get('account')
         account = CommonAccount.objects.get(id=account_id)
 
         account.increase_debt(request.user, int(inc_debt*100))
-
-        return redirect("/common_account/?q={}".format(account_id))
-
-    
-    if request.GET.get("inc_owed"):
-        inc_debt = float(request.GET.get('value_inc_owed'))
-        account_id = request.GET.get('account')
-        print(inc_debt)
-
-        account = CommonAccount.objects.get(id=account_id)
-
-        account.decrease_debt(request.user, int(inc_debt*100))
-
+        account.decrease_debt(request.user, int(inc_owed*100))
+        
         return redirect("/common_account/?q={}".format(account_id))

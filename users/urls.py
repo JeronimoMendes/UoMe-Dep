@@ -11,6 +11,5 @@ urlpatterns = [
     url(r"^oauth/", include("social_django.urls")), 
     url(r'search/', user_search_view, name="search"),
     url(r"friends/", friends),
-    url(r"welcome", welcome),
-    url(r"dashboard2", dashboard2)
+    url(r"welcome", welcome)
 ]

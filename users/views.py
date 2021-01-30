@@ -52,6 +52,7 @@ def register(request):
 
     
 def user_search_view(request, *args, **kwargs):
+
     if not request.user.is_authenticated: return redirect("/accounts/login")
     context = {}
     nr_friend_requests = len(FriendRequest.objects.filter(to_user=request.user))
@@ -80,6 +81,8 @@ def user_search_view(request, *args, **kwargs):
 
 
 def friends(request):
+    if not request.user.is_authenticated: return redirect("/accounts/login")
+
     def get_context():
         context = {
             "friends": request.user.profile.network.all(),
