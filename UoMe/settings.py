@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 import social_django
 import sys
-import urlparse
+import urllib.parse
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'UoMe.wsgi.application'
 
 
 # Register database schemes in URLs.
-urlparse.uses_netloc.append('mysql')
+urllib.parse.uses_netloc.append('mysql')
 
 try:
 
@@ -105,7 +105,7 @@ try:
         DATABASES = {}
 
     if 'DATABASE_URL' in os.environ:
-        url = urlparse.urlparse(os.environ['CLEARDB_DATABASE_URL'])
+        url = urllib.parse.urlparse(os.environ['CLEARDB_DATABASE_URL'])
 
         # Ensure default database exists.
         DATABASES['default'] = DATABASES.get('default', {})
