@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ["localhost", "uo-me.herokuapp.com"]
 # Application definition
 
 INSTALLED_APPS = [  
+    'widget_tweaks',
     'common_balance',  
     'users',
     'social_django',
