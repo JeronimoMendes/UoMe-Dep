@@ -15,6 +15,8 @@ import os
 import social_django
 import sys
 import urllib.parse
+from dotenv import load_dotenv
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'ep+$yp8-a7$j$60_l+ez$h5s%%dka(s7o0(s%ub+zy3)d$h*4b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = ["localhost", "uo-me.herokuapp.com"]
 
@@ -96,11 +98,11 @@ WSGI_APPLICATION = 'UoMe.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'uome',
-        'USER': 'postgres',
-        'PASSWORD': 'Jeremias1919',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv("DATABASE_NAME"),
+        'USER': os.getenv("DATABASE_USER"),
+        'PASSWORD': os.getenv("DATABASE_PASSWORD"),
+        'HOST': os.getenv("DATABASE_HOST"),
+        'PORT': os.getenv("DATABASE_PORT"),
     }
 }
 # E-mail settings
