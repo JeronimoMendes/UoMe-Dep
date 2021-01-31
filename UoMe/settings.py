@@ -95,11 +95,14 @@ WSGI_APPLICATION = 'UoMe.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'uome',
+        'USER': 'postgres',
+        'PASSWORD': 'Jeremias1919',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 # E-mail settings
 EMAIL_HOST = "smtp.mailgun.org"
 EMAIL_PORT = 587
