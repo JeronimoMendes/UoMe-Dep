@@ -33,7 +33,7 @@
   <body class="text-center">
     <form class="form-signin" method="POST">
     {% csrf_token %}
-    
+    {% load widget_tweaks %}
       <img class="mb-4" src="https://raw.githubusercontent.com/JeronimoMendes/ImagesREADME/3453fea3d627167c79a3a08316b78bedf33f2400/UoMe/vector3/default-monochrome-white.svg" alt="">
       <h1 class="h3 mb-3 font-weight-normal">Registration</h1>
       {% with WIDGET_REQUIRED_CLASS='form-control' %}
