@@ -76,7 +76,7 @@ def common_acc(request):
 
         Log.objects.create(by_user=request.user, common_account=account, reason=reason, inc_debt=inc_debt, inc_owed=inc_owed)
 
-        user2 = account.other_user(request.user)
+        user2 = account.other_user(request.user.username)
         template_context = {
             "account": account,
             "user": request.user,
