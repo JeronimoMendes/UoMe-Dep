@@ -3,6 +3,9 @@ from .models import CommonAccount, Log
 from users.models import Profile, FriendRequest
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+import os
 # Create your views here.
 def debt_dashboard(request):   
     def get_context():
@@ -73,6 +76,27 @@ def common_acc(request):
 
         Log.objects.create(by_user=request.user, common_account=account, reason=reason, inc_debt=inc_debt, inc_owed=inc_owed)
 
+        user2 = account.other_user(request.user)
+        template_context = {
+            "account": account,
+            "user": request.user,
+            "user2": user2,
+            "change": inc_debt - inc_owed,
+            "minus_change": -(inc_debt - inc_owed),
+            "in_debt": account.how_much_debt(user2) > account.how_much_owes(user2),
+            "balance": abs(account.balance/100),
+            "reason": reason
+        }
+        template = render_to_string("emails/notification_email.html", template_context)
 
+        email = EmailMessage(
+            "{} updated your common account".format(request.user),
+            template,
+            os.getenv("EMAIL_HOST_USER"),
+            [user2.email],
+        )
+
+        email.fail_silently = False
+        email.send()
         
         return redirect("/common_account/?q={}".format(account_id))
