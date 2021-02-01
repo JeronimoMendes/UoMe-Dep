@@ -14,6 +14,7 @@ def dashboard2(request):
 def welcome(request):
     return render(request, "users/welcome.html")
 
+
 def dashboard(request):
     context = {}
     if request.user.is_authenticated:
@@ -34,6 +35,7 @@ def dashboard(request):
 def register(request):
 
     args = {}
+
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
 
@@ -43,6 +45,9 @@ def register(request):
             user.save()
             login(request, user)
             return redirect("/debt_dashboard/")
+
+        args["form"] = form
+        return render(request, "users/register.html", args)
         
     else:
         form = CustomUserCreationForm()

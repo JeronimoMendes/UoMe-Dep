@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from .models import CommonAccount
-from users.models import Profile
+from .models import CommonAccount, Log
+from users.models import Profile, FriendRequest
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
-from users.models import FriendRequest
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+import os
 # Create your views here.
 def debt_dashboard(request):   
     def get_context():
@@ -40,13 +42,15 @@ def common_acc(request):
         account = CommonAccount.objects.get(id=query)
         user = request.user
         nr_friend_requests = len(FriendRequest.objects.filter(to_user=user))
+        logs = Log.objects.filter(common_account=account).order_by('-date')
 
         context = {
             "other_user": account.other_user(user.username),
             "debt": account.how_much_debt(user.username)/100,
             "owed": account.how_much_owes(user.username)/100,
             "acc": account,
-            'nr_friend_requests': nr_friend_requests
+            'nr_friend_requests': nr_friend_requests,
+            "logs": logs
         }
 
         return context
@@ -57,14 +61,42 @@ def common_acc(request):
     if request.GET.get("q"):
         return render(request, "dashboard/common_account.html", get_context())
 
-    if request.GET.get("s"):
+    if request.GET.get("submit"):
+        print(request.GET.get('value_inc_debt'))
+        print(request.GET.get('value_inc_owed'))
         inc_debt = float(request.GET.get('value_inc_debt'))
         inc_owed = float(request.GET.get('value_inc_owed'))
+        reason = request.GET.get('reason')
 
         account_id = request.GET.get('account')
         account = CommonAccount.objects.get(id=account_id)
 
         account.increase_debt(request.user, int(inc_debt*100))
         account.decrease_debt(request.user, int(inc_owed*100))
+
+        Log.objects.create(by_user=request.user, common_account=account, reason=reason, inc_debt=inc_debt, inc_owed=inc_owed)
+
+        user2 = account.other_user(request.user)
+        template_context = {
+            "account": account,
+            "user": request.user,
+            "user2": user2,
+            "change": inc_debt - inc_owed,
+            "minus_change": -(inc_debt - inc_owed),
+            "in_debt": account.how_much_debt(user2) > account.how_much_owes(user2),
+            "balance": abs(account.balance/100),
+            "reason": reason
+        }
+        template = render_to_string("emails/notification_email.html", template_context)
+
+        email = EmailMessage(
+            "{} updated your common account".format(request.user),
+            template,
+            os.getenv("EMAIL_HOST_USER"),
+            [user2.email],
+        )
+
+        email.fail_silently = False
+        email.send()
         
         return redirect("/common_account/?q={}".format(account_id))

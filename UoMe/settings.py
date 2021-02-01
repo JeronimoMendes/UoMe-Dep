@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ["localhost", "uo-me.herokuapp.com"]
 # Application definition
 
 INSTALLED_APPS = [  
+    'widget_tweaks',
     'common_balance',  
     'users',
     'social_django',
@@ -106,10 +107,11 @@ DATABASES = {
     }
 }
 # E-mail settings
-EMAIL_HOST = "smtp.mailgun.org"
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "postmaster@sandboxc1e594331c9747f49ccbbe453fd812b2.mailgun.org"
-EMAIL_HOST_PASSWORD ="c7acaf84c0ede4de21cc35593e1667e6-b6190e87-3fe20f30"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = r"gG3f7A%p6%heo@N@E$"
 EMAIL_USE_TLS = True
 
 # Redirection URLs after user actions
