@@ -75,8 +75,8 @@ def common_acc(request):
         account.decrease_debt(request.user, int(inc_owed*100))
 
         Log.objects.create(by_user=request.user, common_account=account, reason=reason, inc_debt=inc_debt, inc_owed=inc_owed)
-
-        user2 = account.other_user(request.user)
+        
+        user2 = account.other_user(request.user.username)
         template_context = {
             "account": account,
             "user": request.user,
@@ -88,7 +88,7 @@ def common_acc(request):
             "reason": reason
         }
         template = render_to_string("emails/notification_email.html", template_context)
-
+        
         email = EmailMessage(
             "{} updated your common account".format(request.user),
             template,
@@ -96,7 +96,7 @@ def common_acc(request):
             [user2.email],
         )
 
-        email.fail_silently = False
-        email.send()
+        #email.fail_silently = False
+        #email.send()
         
         return redirect("/common_account/?q={}".format(account_id))
