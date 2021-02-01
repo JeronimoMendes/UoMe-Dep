@@ -39,7 +39,7 @@ def common_acc(request):
         account = CommonAccount.objects.get(id=query)
         user = request.user
         nr_friend_requests = len(FriendRequest.objects.filter(to_user=user))
-        logs = Log.objects.filter(common_account=account)
+        logs = Log.objects.filter(common_account=account).order_by('-date')
 
         context = {
             "other_user": account.other_user(user.username),

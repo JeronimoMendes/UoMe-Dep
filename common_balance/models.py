@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 # Create your models here.
 class CommonAccount(models.Model):
@@ -60,5 +61,6 @@ class Log(models.Model):
     reason = models.TextField(blank=True)
     inc_debt = models.BigIntegerField(default=0)
     inc_owed = models.BigIntegerField(default=0)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self): return (self.by_user.username + "_" + self.common_account.__str__())

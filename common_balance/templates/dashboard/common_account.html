@@ -187,10 +187,26 @@ body {
 }
 .box1 {
   flex: 0 0 65%;
+  max-width: 50%;
 }
 
 .box2 {
   flex: 1;
+}
+.logs {
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 500px;
+}
+.log {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
+  margin-bottom: 16px;
+  text-align: center;
+  background-color: #333;
+  border: 4px solid;
+  border-radius: 20px;
+  border-color: #333; 
+  padding: 4px;
 }
 </style>
 </head>
@@ -247,16 +263,21 @@ body {
       </form>
   </div>
 
-  <div class="box2">
-    <h2>Logs</h2>
-    {% for log in logs %}
-      <label>By {{ log.by_user }}</label>
-      <h3>Increased debt by {{ log.inc_debt}} </h3>
-      <h3>Increased owed by {{ log.inc_owed}} </h3>
-      <h3>Reason: {{ log.reason}} </h3>
-    {% endfor %}
-  </div>
-   
+	<div class="box2"> 
+		<h2>Logs</h2>
+			<div class="logs">
+			{% for log in logs %}
+					{% if request.user == log.by_user %}
+						<h4 class="log" style="color: white; text-align:left; word-spacing: 80px;">{{ log.date.date|date:"d-m-Y" }}  {{ log.by_user }} <span class="badge bg-secondary" style="color: red; background-color:#f1f1f1;">+{{ log.inc_owed }}</span> <span class="badge bg-secondary" style="color: green; background-color:#f1f1f1;">-{{ log.inc_debt }}</span></h4>
+					{% else %}
+						<h4 class="log" style="color: white; text-align:left; word-spacing: 80px;">{{ log.date.date|date:"d-m-Y" }} {{ log.by_user }} <span class="badge bg-secondary" style="color: red; background-color:#f1f1f1;">{{ log.inc_debt }}</span> <span class="badge bg-secondary" style="color: green; background-color:#f1f1f1;">{{ log.inc_owed }}</span></h4>
+
+					{% endif %}
+			{% endfor %}
+			</div>
+	</div>
+</div>
+
   </div>
 
 </div>
@@ -276,6 +297,11 @@ function closeNav() {
   document.getElementById("open").style.display = "none";
   document.getElementById("closed").style.display = "block";
 }
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
 </script>
    
 </body>
