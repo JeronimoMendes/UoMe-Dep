@@ -14,6 +14,7 @@ def dashboard2(request):
 def welcome(request):
     return render(request, "users/welcome.html")
 
+
 def dashboard(request):
     context = {}
     if request.user.is_authenticated:

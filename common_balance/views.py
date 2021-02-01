@@ -57,7 +57,9 @@ def common_acc(request):
     if request.GET.get("q"):
         return render(request, "dashboard/common_account.html", get_context())
 
-    if request.GET.get("s"):
+    if request.GET.get("submit"):
+        print(request.GET.get('value_inc_debt'))
+        print(request.GET.get('value_inc_owed'))
         inc_debt = float(request.GET.get('value_inc_debt'))
         inc_owed = float(request.GET.get('value_inc_owed'))
 
