@@ -268,17 +268,21 @@ body {
 				</thead>
 				<tbody>
 				{% for log in logs %}
-					{% if request.user == log.by_user %}
 					<tr>
+					{% if request.user == log.by_user %}
+					
 						<th scope="row">{{ log.date.date|date:"d-m-Y" }}</th>
 						<td>{{ log.by_user }}</td>
 						<td><span class="badge bg-secondary" style="color: red; background-color:#f1f1f1;">+{{ log.inc_owed }}</span></td>
 						<td><span class="badge bg-secondary" style="color: green; background-color:#f1f1f1;">-{{ log.inc_debt }}</span></td>
 						{% else %}
-						<h4 class="log" style="color: white; text-align:left; word-spacing: 80px;">{{ log.date.date|date:"d-m-Y" }} {{ log.by_user }} <span class="badge bg-secondary" style="color: red; background-color:#f1f1f1;">{{ log.inc_debt }}</span> <span class="badge bg-secondary" style="color: green; background-color:#f1f1f1;">{{ log.inc_owed }}</span></h4>
-					</tr>
+						<th scope="row">{{ log.date.date|date:"d-m-Y" }}</th>
+						<td>{{ log.by_user }}</td>
+						<td><span class="badge bg-secondary" style="color: red; background-color:#f1f1f1;">+{{ log.inc_debt }}</span></td>
+						<td><span class="badge bg-secondary" style="color: green; background-color:#f1f1f1;">-{{ log.inc_owed }}</span></td>
 					{% endif %}
-						{% endfor %}
+					</tr>
+				{% endfor %}
 				</tbody>
 			</table>
 		</div>

@@ -126,6 +126,6 @@ def preferences(request):
 
         return render(request, "users/preferences.html", context)
     
-    if resquest.method == "POST":
+    if request.method == "POST":
         pass
 
