@@ -114,3 +114,15 @@ def friends(request):
 
     if request.method == "GET":
         return render(request, "users/friends.html", get_context()) 
+
+
+def preferences(request):
+    if not request.user.is_authenticated: return redirect("/accounts/login")
+    
+    if request.method == "GET":
+        context = {
+            "nr_friend_requests": len(FriendRequest.objects.filter(to_user=request.user))
+        }
+
+        return render(request, "users/preferences.html", context)
+

@@ -193,20 +193,11 @@ body {
 .box2 {
   flex: 1;
 }
+
 .logs {
-  overflow: hidden;
-  overflow-y: scroll;
-  height: 500px;
-}
-.log {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
-  margin-bottom: 16px;
-  text-align: center;
-  background-color: #333;
-  border: 4px solid;
-  border-radius: 20px;
-  border-color: #333; 
-  padding: 4px;
+	overflow: hidden;
+  	overflow-y: scroll;
+  	height: 500px;
 }
 </style>
 </head>
@@ -265,16 +256,32 @@ body {
 
 	<div class="box2"> 
 		<h2>Logs</h2>
-			<div class="logs">
-			{% for log in logs %}
+		<div class="logs">
+			<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">Date</th>
+					<th scope="col">User</th>
+					<th scope="col">Increased</th>
+					<th scope="col">Decreased</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for log in logs %}
 					{% if request.user == log.by_user %}
-						<h4 class="log" style="color: white; text-align:left; word-spacing: 80px;">{{ log.date.date|date:"d-m-Y" }}  {{ log.by_user }} <span class="badge bg-secondary" style="color: red; background-color:#f1f1f1;">+{{ log.inc_owed }}</span> <span class="badge bg-secondary" style="color: green; background-color:#f1f1f1;">-{{ log.inc_debt }}</span></h4>
-					{% else %}
+					<tr>
+						<th scope="row">{{ log.date.date|date:"d-m-Y" }}</th>
+						<td>{{ log.by_user }}</td>
+						<td><span class="badge bg-secondary" style="color: red; background-color:#f1f1f1;">+{{ log.inc_owed }}</span></td>
+						<td><span class="badge bg-secondary" style="color: green; background-color:#f1f1f1;">-{{ log.inc_debt }}</span></td>
+						{% else %}
 						<h4 class="log" style="color: white; text-align:left; word-spacing: 80px;">{{ log.date.date|date:"d-m-Y" }} {{ log.by_user }} <span class="badge bg-secondary" style="color: red; background-color:#f1f1f1;">{{ log.inc_debt }}</span> <span class="badge bg-secondary" style="color: green; background-color:#f1f1f1;">{{ log.inc_owed }}</span></h4>
-
+					</tr>
 					{% endif %}
-			{% endfor %}
-			</div>
+						{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 
