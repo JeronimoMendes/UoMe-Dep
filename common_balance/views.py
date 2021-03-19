@@ -75,6 +75,7 @@ def common_acc(request):
         account.decrease_debt(request.user, int(inc_owed*100))
 
         Log.objects.create(by_user=request.user, common_account=account, reason=reason, inc_debt=inc_debt, inc_owed=inc_owed)
+
         user2 = account.other_user(request.user.username)    
 
         if user2.profile.email_notification:
@@ -100,5 +101,6 @@ def common_acc(request):
 
             email.fail_silently = False
             email.send()
+
         
         return redirect("/common_account/?q={}".format(account_id))
