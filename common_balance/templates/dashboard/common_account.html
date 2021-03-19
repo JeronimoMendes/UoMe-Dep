@@ -139,16 +139,6 @@ body {
       }
 }
 
-.btn-primary {
-  background-color: #F8680C;
-  border-color: #F8680C;
-  transition: 0.6s ease;
-}
-
-.btn-primary:hover {
-  background-color: #F8680C;
-  transform: scale(1.075);
-}
 .sidebar .logout {
   margin-top: 75%;
 }
@@ -165,7 +155,7 @@ body {
   margin-bottom: 16px;
 }
 
-.btn {
+.btn-primary{
   background-color: #333;
   border-color: white;
   border-width: 3px;
@@ -175,7 +165,7 @@ body {
   margin-top: 8px;
 }
 
-.btn:hover{
+.btn-primary:hover{
   color: #f1f1f1;
   background-color: #F8680C;
   transform: scale(1.075);
@@ -190,6 +180,22 @@ body {
   max-width: 50%;
 }
 
+@media (max-width: 400px) {
+
+  .box1 {
+    width: 100%;
+  }
+  
+
+  .container {
+    display: block;
+  }
+
+  .logs {
+    overflow-x: scroll;
+  }
+}
+
 .box2 {
   flex: 1;
 }
@@ -198,6 +204,11 @@ body {
 	overflow: hidden;
   	overflow-y: scroll;
   	height: 500px;
+}
+
+textarea {
+  border
+
 }
 </style>
 </head>
@@ -264,23 +275,24 @@ body {
 					<th scope="col">User</th>
 					<th scope="col">Increased</th>
 					<th scope="col">Decreased</th>
+          <th scope="col">Info</th>
 				</tr>
 				</thead>
 				<tbody>
 				{% for log in logs %}
 					<tr>
+            <th scope="row">{{ log.date.date|date:"d-m-Y" }}</th>
+            <td>{{ log.by_user }}</td>
 					{% if request.user == log.by_user %}
-					
-						<th scope="row">{{ log.date.date|date:"d-m-Y" }}</th>
-						<td>{{ log.by_user }}</td>
-						<td><span class="badge bg-secondary" style="color: red; background-color:#f1f1f1;">+{{ log.inc_owed }}</span></td>
-						<td><span class="badge bg-secondary" style="color: green; background-color:#f1f1f1;">-{{ log.inc_debt }}</span></td>
+						<td><span style="color: red; font-weight: bold;">{{ log.inc_owed }}</span></td>
+						<td><span style="color: green; font-weight: bold;">{{ log.inc_debt }}</span></td>
+						
 						{% else %}
-						<th scope="row">{{ log.date.date|date:"d-m-Y" }}</th>
-						<td>{{ log.by_user }}</td>
-						<td><span class="badge bg-secondary" style="color: red; background-color:#f1f1f1;">+{{ log.inc_debt }}</span></td>
-						<td><span class="badge bg-secondary" style="color: green; background-color:#f1f1f1;">-{{ log.inc_owed }}</span></td>
+
+						<td><span style="color: red; font-weight: bold;">{{ log.inc_debt }}</span></td>
+						<td><span style="color: green; font-weight: bold;">{{ log.inc_owed }}</span></td>
 					{% endif %}
+          <td>{{ log.reason }}</td>
 					</tr>
 				{% endfor %}
 				</tbody>
@@ -309,10 +321,11 @@ function closeNav() {
   document.getElementById("closed").style.display = "block";
 }
 
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-  return new bootstrap.Tooltip(tooltipTriggerEl)
+var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
+var collapseList = collapseElementList.map(function (collapseEl) {
+  return new bootstrap.Collapse(collapseEl)
 })
+
 </script>
    
 </body>
