@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'ep+$yp8-a7$j$60_l+ez$h5s%%dka(s7o0(s%ub+zy3)d$h*4b'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG")
+DEBUG = os.getenv("DEBUG", False)
 
 ALLOWED_HOSTS = ["localhost", "uo-me.herokuapp.com"]
 
