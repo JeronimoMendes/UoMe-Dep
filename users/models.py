@@ -10,6 +10,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     debt = models.BigIntegerField(default=0)
     owed = models.BigIntegerField(default=0)
+    email_notification = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user.username
