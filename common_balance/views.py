@@ -98,7 +98,10 @@ def common_acc(request):
                 [user2.email],
             )
 
-            email.fail_silently = True
-            email.send()
+            try:
+                email.fail_silently = True
+                email.send()
+            except:
+                print("Notification failed!")
         
         return redirect("/common_account/?q={}".format(account_id))
