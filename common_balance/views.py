@@ -98,7 +98,7 @@ def common_acc(request):
                 [user2.email],
             )
 
-            email.fail_silently = False
+            email.fail_silently = True
             email.send()
         
         return redirect("/common_account/?q={}".format(account_id))
